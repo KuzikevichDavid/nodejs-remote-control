@@ -1,33 +1,21 @@
 import { config } from 'dotenv';
-import { Writable } from 'stream';
+import { Duplex } from 'stream';
 import { createWebSocketStream, WebSocket, WebSocketServer } from 'ws';
-import { execute } from './cmd';
-import { startStreaming } from './streaming';
+import { execute } from './cmdExecuter';
 
 config();
 
-const cmdResolver = async (request: string, response: Writable) => {
-  const splited = request.split('S');
-  const result = execute(splited[0], splited.slice(1));
-  response.write(result);
-
-const onData = async (request: string): Promise<string> => {
+const streamResolver = async (request: string, response: Duplex) => {
   const splited = request.split(/\s/);
   const result = await execute(splited[0], splited.slice(1));
-  console.log('received: %s result: %s', request, result ?? '');
-  return result;
+  if (result) response.write(result);
+  console.log('received: %s response: %s', request, result ?? '');
 };
 
 const connectionResolver = (ws: WebSocket) => {
   console.log('Client connected');
-  //const duplex = createWebSocketStream(ws, { encoding: 'utf8' });
-  //startStreaming(duplex, cmdResolver);
-  //duplex.on('data', (data) => cmdResolver(data, duplex))
-
-  ws.on('message', async (data) => {
-    const result = await onData(data.toString());
-    if (result) ws.send(result);
-  });
+  const duplex = createWebSocketStream(ws, { encoding: 'utf8', decodeStrings: false });
+  duplex.on('data', (data) => streamResolver(data, duplex));
 
   ws.on('close', (code, reason) => {
     console.log('Client disconnected with code: %s, reason: %s', code, reason);
@@ -58,4 +46,4 @@ const createServer = () => {
   return wss;
 };
 
-const wss = createServer();
+createServer();
