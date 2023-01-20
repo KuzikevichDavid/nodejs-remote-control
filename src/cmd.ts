@@ -6,11 +6,13 @@ enum CMD {
   mouse_right = 'mouse_right',
   draw_rectangle = 'draw_rectangle',
   draw_square = 'draw_square',
-  draw_circle = 'draw_circle'
+  draw_circle = 'draw_circle',
+  prnt_scrn = 'prnt_scrn'
 }
 
 import { mouseCommands } from './commands/mouse';
 import { drawCommands } from './commands/drawing';
+import { screenCommands } from './commands/screen';
 
 const response = (cmd: string, result: string): string => `${cmd} ${result}`;
 
@@ -31,6 +33,8 @@ export const execute = async (cmd: string, params?: string[]): Promise<string> =
     case CMD.draw_circle:
       drawCommands.drawCircle(+params[0]);
       return;
+    case CMD.prnt_scrn:
+      return response(cmd, await screenCommands.getScreen());
     default:
       return;
   }
