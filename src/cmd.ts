@@ -8,7 +8,7 @@ enum CMD {
 
 import { commands } from './commands/mouse';
 
-const response = (cmd: string, result: string): string => `${cmd} ${result}`
+const response = (cmd: string, result: string): string => `${cmd} ${result}`;
 
 export const execute = async (cmd: string, params?: string[]): Promise<string> => {
   switch (cmd) {
@@ -18,7 +18,7 @@ export const execute = async (cmd: string, params?: string[]): Promise<string> =
     case CMD.mouse_down:
     case CMD.mouse_right:
     case CMD.mouse_left:
-      commands.mouseMove(cmd.split('_')[1], params[0])
+      commands.mouseMove(cmd.split('_')[1], params[0]);
       return;
     default:
       return;

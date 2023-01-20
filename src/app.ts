@@ -26,8 +26,8 @@ const connectionResolver = (ws: WebSocket) => {
 
   ws.on('message', async (data) => {
     const result = await onData(data.toString());
-    if (result) ws.send(result)
-  })
+    if (result) ws.send(result);
+  });
 
   ws.on('close', (code, reason) => {
     console.log('Client disconnected with code: %s, reason: %s', code, reason);
@@ -55,7 +55,7 @@ const createServer = () => {
     wss.close(() => process.exit());
   });
 
-  return wss
+  return wss;
 };
 
 const wss = createServer();
