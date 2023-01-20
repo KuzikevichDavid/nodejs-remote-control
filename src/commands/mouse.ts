@@ -1,6 +1,6 @@
 import { mouse, Point } from '@nut-tree/nut-js';
 
-export namespace commands {
+export namespace mouseCommands {
   export const mousePosition = async (): Promise<string> => {
     return mouse.getPosition().then((p) => `${p.x},${p.y}`);
   };

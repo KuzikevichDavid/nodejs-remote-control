@@ -14,7 +14,7 @@ const cmdResolver = async (request: string, response: Writable) => {
 const onData = async (request: string): Promise<string> => {
   const splited = request.split(/\s/);
   const result = await execute(splited[0], splited.slice(1));
-  console.log('received: %s result: %s', request, result);
+  console.log('received: %s result: %s', request, result ?? '');
   return result;
 };
 
