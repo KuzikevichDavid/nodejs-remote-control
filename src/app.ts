@@ -3,8 +3,6 @@ import { Duplex } from 'stream';
 import { createWebSocketStream, WebSocket, WebSocketServer } from 'ws';
 import { execute } from './cmdExecuter';
 
-config();
-
 const streamResolver = async (request: string, response: Duplex) => {
   const splited = request.split(/\s/);
   const result = await execute(splited[0], splited.slice(1));
@@ -45,5 +43,7 @@ const createServer = () => {
 
   return wss;
 };
+
+config();
 
 createServer();
