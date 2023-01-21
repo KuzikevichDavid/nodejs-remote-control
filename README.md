@@ -2,7 +2,7 @@
  
  Simple implementation of Websocket server for remote control. 
 
- For mouse operations and screen capture using [nutjs.dev](https://www.npmjs.com/package/@nut-tree/nut-js) library. 
+ For mouse operations and screen capture used [nutjs.dev](https://www.npmjs.com/package/@nut-tree/nut-js) library. 
  For image manipulations [jimp](https://www.npmjs.com/package/jimp).
 
  User interface for this server is [here](https://github.com/rolling-scopes-school/remote-control)
