@@ -9,8 +9,21 @@ export const getScreen = async (): Promise<string> => {
   const height = width;
   const calcLeft = position.x - Math.round(width / 2);
   const calcTop = position.y - Math.round(width / 2);
-  const left = calcLeft < 0 ? 0 : calcLeft + width > scrW ? scrW - width : calcLeft;
-  const top = calcTop < 0 ? 0 : calcTop + height > scrH ? scrH - height : calcTop;
+  let left = 0, top = 0;
+  if (calcLeft < 0) {
+    left = 0
+  } else if (calcLeft + width > scrW) {
+    left = scrW - width;
+  } else {
+    left = calcLeft;
+  }
+  if (calcTop < 0) {
+    top = 0
+  } else if (calcTop + height > scrH) {
+    top = scrH - height;
+  } else {
+    top = calcTop;
+  }
   const region = new Region(left, top, width, height);
   const scrShot = await screen.grabRegion(region);
   const buf = await scrShot.toRGB();
